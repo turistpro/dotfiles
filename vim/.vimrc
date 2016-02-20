@@ -91,7 +91,7 @@ if has("gui_running")
 endif
 set ttyfast
 
-colorscheme wombat
+colorscheme nightly
 " set guifont=*
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
 
@@ -200,10 +200,10 @@ let g:syntastic_warning_symbol = 'x'
 let g:syntastic_style_warning_symbol = 'x'
 
 " Vim-Airline
-if has("gui_running")
-  let g:airline_powerline_fonts = 1
-  let g:airline_theme='powerlineish'
-endif
+"if has("gui_running")
+let g:airline_powerline_fonts = 1
+"let g:airline_theme='wombat'
+"endif
 "let g:airline_left_sep=''
 "let g:airline_right_sep=''
 
