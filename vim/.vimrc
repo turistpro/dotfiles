@@ -8,7 +8,7 @@ filetype off     " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'              " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
 "---------=== Code/project navigation ===-------------
 Plugin 'scrooloose/nerdtree'            " A tree explorer plugin for vim
 Plugin 'Shougo/unite.vim'               " Navigation between buffers and files
@@ -91,7 +91,8 @@ if has("gui_running")
 endif
 set ttyfast
 
-colorscheme nightly
+set t_Co=256
+colorscheme Tomorrow-Night-Bright
 " set guifont=*
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
 
