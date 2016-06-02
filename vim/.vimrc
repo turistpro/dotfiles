@@ -8,7 +8,7 @@ filetype off     " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'              " let Vundle manage Vundle, required
 "---------=== Code/project navigation ===-------------
 Plugin 'scrooloose/nerdtree'            " A tree explorer plugin for vim
 Plugin 'Shougo/unite.vim'               " Navigation between buffers and files
@@ -73,6 +73,7 @@ filetype plugin indent on
 " General settings
 "=====================================================
 
+set t_Co=256
 set backspace=indent,eol,start
 " This must happen before the syntax system is enabled
 aunmenu Help.
@@ -91,7 +92,6 @@ if has("gui_running")
 endif
 set ttyfast
 
-set t_Co=256
 colorscheme Tomorrow-Night-Bright
 " set guifont=*
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
@@ -185,6 +185,7 @@ let g:ConqueTerm_CloseOnEnd = 0
 let g:jedi#show_call_signatures = 1 " Show call signatures
 let g:jedi#popup_on_dot = 1         " Enable autocomplete on dot
 let g:jedi#popup_select_first = 0   " Disable first select from auto-complete
+let jedi#use_tabs_not_buffers = 1   " Command output is put in a new tab
 
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
