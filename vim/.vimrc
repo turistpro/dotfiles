@@ -60,9 +60,15 @@ Plugin 'mitsuhiko/vim-python-combined'  " Combined Python 2/3 for Vim
 Plugin 'hynek/vim-python-pep8-indent'   " PEP8 indent
 Plugin 'jmcantrell/vim-virtualenv'      " Virtualenv support in VIM
 
+" --- PHP ---
+Plugin 'stephpy/vim-php-cs-fixer'
+
 " --- Rust ---
 "Plugin 'rust-lang/rust.vim'             " Vim support for Rust file detection and syntax highlighting
 "Plugin 'racer-rust/vim-racer'           " Rust code completion in vim via racer
+
+" --- Colorsheme ---
+Plugin 'altercation/vim-colors-solarized' " Precision colorscheme for the vim text
 
 call vundle#end() " required
 filetype on
@@ -367,6 +373,21 @@ autocmd FileType pyrex setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 s
 let g:syntastic_python_checkers = ['flake8', 'python']
 let g:syntastic_python_flake8_args='--ignore=E121,E128,E711,E301,E261,E241,E124,E126,E721
 \ --max-line-length=80'
+
+" --- PHP ---
+autocmd FileType php setlocal tabstop=8 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType php setlocal commentstring=/*\ %s\ */
+" If php-cs-fixer is in $PATH, you don't need to define line below
+" let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
+let g:php_cs_fixer_level = "symfony"              " which level ?
+let g:php_cs_fixer_config = "default"             " configuration
+"let g:php_cs_fixer_config_file = '.php_cs'       " configuration file
+let g:php_cs_fixer_php_path = "php"               " Path to PHP
+" If you want to define specific fixers:
+"let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"
+let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
 
 " --- Rust ---
 set hidden
