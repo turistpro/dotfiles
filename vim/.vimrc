@@ -69,6 +69,7 @@ Plugin 'stephpy/vim-php-cs-fixer'
 
 " --- Colorsheme ---
 Plugin 'altercation/vim-colors-solarized' " Precision colorscheme for the vim text
+Plugin 'jnurmine/Zenburn'
 
 call vundle#end() " required
 filetype on
