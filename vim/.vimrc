@@ -8,19 +8,22 @@ filetype off     " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'              " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'              " let Vundle manage Vundle, required
 "---------=== Code/project navigation ===-------------
 Plugin 'scrooloose/nerdtree'            " A tree explorer plugin for vim
 Plugin 'Shougo/unite.vim'               " Navigation between buffers and files
-Plugin 'majutsushi/tagbar'              " Class/module browser
+" Plugin 'majutsushi/tagbar'              " Class/module browser
+Plugin 'kien/ctrlp.vim'                 " Super Searching
 
 "------------------=== Other ===----------------------
 "Plugin 'bling/vim-airline'              " lean & mean status/tabline for vim that's light as air
 Plugin 'fisadev/FixedTaskList.vim'      " Pending tasks list
-Plugin 'rosenfeld/conque-term'          " Consoles as buffers
-Plugin 'tpope/vim-surround'             " Parentheses, brackets, quotes, XML tags, and more
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes' " vim-airline-themes
+" Plugin 'rosenfeld/conque-term'          " Consoles as buffers
+" Plugin 'tpope/vim-surround'             " Parentheses, brackets, quotes, XML tags, and more
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes' " vim-airline-themes
 
 "--------------=== Snippets support ===---------------
 Plugin 'garbas/vim-snipmate'            " Snippets manager
@@ -32,6 +35,7 @@ Plugin 'honza/vim-snippets'             " Snippets repo
 Plugin 'scrooloose/syntastic'           " Syntax checking plugin for Vim
 Plugin 'tpope/vim-commentary'           " Comment stuff out
 Plugin 'mitsuhiko/vim-sparkup'          " Sparkup (XML/jinja/htlm-django/etc.) support
+Plugin 'Valloric/YouCompleteMe'         " A code-completion engine for Vim
 
 " --- Clojure ---
 Plugin 'tpope/vim-fireplace'            " Clojure completion
@@ -53,12 +57,13 @@ Plugin 'othree/html5.vim'               " HTML5 omnicomplete and sytnax
 Plugin 'idanarye/breeze.vim'            " Html navigation like vim-easymotion, tag matching, tag highlighting and DOM navigation
 
 " --- Python ---
-Plugin 'davidhalter/jedi-vim'           " Awesome Python autocompletion with VIM
-Plugin 'klen/python-mode'               " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box
-Plugin 'mitsuhiko/vim-jinja'            " Jinja support for vim
-Plugin 'mitsuhiko/vim-python-combined'  " Combined Python 2/3 for Vim
-Plugin 'hynek/vim-python-pep8-indent'   " PEP8 indent
-Plugin 'jmcantrell/vim-virtualenv'      " Virtualenv support in VIM
+Plugin 'nvie/vim-flake8'                " 
+" Plugin 'davidhalter/jedi-vim'           " Awesome Python autocompletion with VIM
+" Plugin 'klen/python-mode'               " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box
+" Plugin 'mitsuhiko/vim-jinja'            " Jinja support for vim
+" Plugin 'mitsuhiko/vim-python-combined'  " Combined Python 2/3 for Vim
+" Plugin 'hynek/vim-python-pep8-indent'   " PEP8 indent
+" Plugin 'jmcantrell/vim-virtualenv'      " Virtualenv support in VIM
 
 " --- PHP ---
 Plugin 'stephpy/vim-php-cs-fixer'
@@ -72,8 +77,8 @@ Plugin 'altercation/vim-colors-solarized' " Precision colorscheme for the vim te
 Plugin 'jnurmine/Zenburn'
 
 call vundle#end() " required
-filetype on
-filetype plugin on
+" filetype on
+" filetype plugin on
 filetype plugin indent on
 
 "=====================================================
@@ -209,12 +214,25 @@ let g:syntastic_warning_symbol = 'x'
 let g:syntastic_style_warning_symbol = 'x'
 
 " Vim-Airline
-"if has("gui_running")
-let g:airline_powerline_fonts = 1
-"let g:airline_theme='wombat'
-"endif
-"let g:airline_left_sep=''
-"let g:airline_right_sep=''
+" if has("gui_running")
+"   let g:airline_powerline_fonts = 1
+"   let g:airline_theme='wombat'
+" endif
+"   let g:airline_left_sep=''
+"   let g:airline_right_sep=''
+
+
+"python with virtualenv support
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUA_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  sys.path.insert(0, project_base_dir)
+  activate_this = os.path.join(project_base_dir,'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 "=====================================================
 " Python-mode settings
@@ -324,6 +342,10 @@ autocmd FileType python map <buffer> <leader>8 :PymodeLint<CR>
 "=====================================================
 " Languages support
 "=====================================================
+" --- All ---
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 " --- C/C++/C# ---
 autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
@@ -362,18 +384,61 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType html setlocal commentstring=<!--\ %s\ -->
 
 " --- Python ---
+" let python_highlight_all=1
+" let python_highlight_exceptions=0
+" let python_highlight_builtins=0
+" let python_slow_sync=1
+" autocmd FileType python setlocal completeopt-=preview
+" autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
+" \ formatoptions+=croq softtabstop=4 smartindent
+" \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+" autocmd FileType pyrex setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+" let g:syntastic_python_checkers = ['flake8', 'python']
+" let g:syntastic_python_flake8_args='--ignore=E121,E128,E711,E301,E261,E241,E124,E126,E721
+" \ --max-line-length=80'
+
+"------------Start Python PEP 8 stuff----------------
+" Number of spaces that a pre-existing tab is equal to.
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
+
+"spaces for indents
+au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
+au BufRead,BufNewFile *.py,*.pyw set expandtab
+au BufRead,BufNewFile *.py set softtabstop=4
+
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" Wrap text after a certain number of characters
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+
+" Use UNIX (\n) line endings.
+au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+
+" Set the default file encoding to UTF-8:
+set encoding=utf-8
+
+" For full syntax highlighting:
 let python_highlight_all=1
-let python_highlight_exceptions=0
-let python_highlight_builtins=0
-let python_slow_sync=1
-autocmd FileType python setlocal completeopt-=preview
-autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
-\ formatoptions+=croq softtabstop=4 smartindent
-\ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-autocmd FileType pyrex setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-let g:syntastic_python_checkers = ['flake8', 'python']
-let g:syntastic_python_flake8_args='--ignore=E121,E128,E711,E301,E261,E241,E124,E126,E721
-\ --max-line-length=80'
+syntax on
+
+" Keep indentation level from previous line:
+autocmd FileType python set autoindent
+
+" make backspaces more powerfull
+set backspace=indent,eol,start
+
+
+"Folding based on indentation:
+autocmd FileType python set foldmethod=indent
+"use space to open folds
+nnoremap <space> za 
+"----------Stop python PEP 8 stuff--------------
 
 " --- PHP ---
 autocmd FileType php setlocal tabstop=8 softtabstop=4 shiftwidth=4 expandtab
