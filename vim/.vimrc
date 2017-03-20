@@ -15,7 +15,6 @@ Plugin 'Shougo/unite.vim'               " Navigation between buffers and files
 Plugin 'majutsushi/tagbar'              " Class/module browser
 
 "------------------=== Other ===----------------------
-"Plugin 'bling/vim-airline'              " lean & mean status/tabline for vim that's light as air
 Plugin 'fisadev/FixedTaskList.vim'      " Pending tasks list
 Plugin 'rosenfeld/conque-term'          " Consoles as buffers
 Plugin 'tpope/vim-surround'             " Parentheses, brackets, quotes, XML tags, and more
@@ -99,9 +98,9 @@ if has("gui_running")
 endif
 set ttyfast
 
-colorscheme Tomorrow-Night-Bright
+colorscheme Tomorrow-Night
 " set guifont=*
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
+set guifont=Roboto\ Mono\ for\ Powerline\ 11
 
 " Enable Syntax Colors
 " in GUI mode we go with fruity and Monaco 13
